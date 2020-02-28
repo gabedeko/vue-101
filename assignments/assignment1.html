@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Assignment 1</title>
+  </head>
+  <script src="vue.js"></script>
+  <body>
+    <div id="exercise">
+
+        <p>{{ name }}({{ age }})</p>
+        <p>{{ age * 3 }}</p>
+        <p>{{ random() }}</p>
+        <div>
+            <img  v-bind:src="img" alt="">
+        </div>
+        <input type="text" v-bind:value="name">
+    </div>
+    <script>
+    new Vue({
+        el: '#exercise',
+        data: {
+            name: 'Gabe Deko',
+            age: 27,
+            img: 'http://writingexercises.co.uk/images2/randomimage/restaurant-view.jpg'
+        },
+        methods: {
+            random: function(event) {
+                return Math.random();
+            }
+            
+        }
+    });
+    </script>
+  </body>
+</html>

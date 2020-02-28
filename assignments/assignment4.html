@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Assignment 4</title>
+  </head>
+  <style>
+      #effect {
+          width: 100px;
+          height: 100px;
+          border: 1px solid black;
+      }
+      .highlight {
+          background-color: red;
+          width: 200px!important;
+      }
+      .myBorder {
+          border: 2px solid #000;
+      }
+      .myFont {
+        font-size: 24px;
+      }
+      .myBackground {
+        background-color: grey;
+      }
+      .yellow {
+        
+          background-color:yellow;
+      }
+      .newWidth {
+        width: 300px!important;
+      }
+      .shrink {
+          background-color: gray;
+          width: 50px!important;
+      }
+      .class-two1 {
+          background-color: green;
+          display:inline;
+      }
+      .class-two2 {
+          background-color: rgb(105, 160, 105);
+          border: 2px solid #000;
+          margin: 0 8px;
+      }
+      h3 {
+          text-decoration:underline;
+      }
+      .visible {
+          height:100px;
+          width: 100px;
+      }
+      .progress-bar {
+          width: 500px;
+          height: 100px;
+          border: 1px solid #000;
+      }
+  </style>
+  <script src="vue.js"></script>
+  <body>
+    <div id="exercise">
+        <!-- 1) Start the Effect with the Button. The effect should alternate the "highlight: or "shrink" class on each new setInternal tick (attach respective class to the div with id" effect" below) -->
+        <div>
+            <h3>1</h3>
+            <button @click="startEffect">Start Effect</button>
+            <div id="effect" :class="[changeColor?'highlight':'shrink']"></div>
+        </div>
+        <!-- 2) Create a couple of CSS classes and attach them via the array syntax -->
+        <div>
+            <h3>2</h3>
+            <div :class="[classTwo1, classTwo2]">I got no class :(</div>
+        </div>
+        <!-- 3) Let the user enter a class (ceate some example classes) and attach it -->
+        <div>
+            <h3>3</h3>
+            <input type="text" v-model="classThree">
+            <div :class="[{visible: true},classThree]"></div>
+        </div>
+        <!-- 4) Le the user enter a class and enter true/flase for another class (create some example classes) and attach the classes -->
+        <div>
+            <h3>4</h3>
+            <input type="text" v-model="classFour">
+            <input type="text" v-model="boolFour">
+            <div :class="[classFour, {visible: boolFour}]" ></div>
+        </div>
+        <!-- 5) Repeat 3) but now with values for styles (instead of class names). Attach the respective styles. -->
+        <div>
+            <h3>5</h3>
+            <input type="text" v-model="color">
+            <div :style="styleFive"></div>
+        </div>
+        <!-- 6) Create a simple progress bar with setInterval and style bindings. Start it by hitting the below button. -->
+        <div>
+            <h3>6</h3>
+            <button @click="startProgress">Start Progress</button>
+            <div :class="['progress-bar']">
+            <div id="progress" :style="styleSix" style="height:100px;"></div>
+            </div>
+            <p>{{ progress }}</p>
+        </div>
+    </div>
+    <script>
+        new Vue ({
+            el: '#exercise',
+            data: {
+                color: 'gray',
+                red: 'red',
+                green: 'green',
+                changeColor: false,
+                classTwo1: 'class-two1',
+                classTwo2: 'class-two2',
+
+                classThree: '',
+
+                classFour: '',
+                boolFour: true,
+
+                height: 100,
+                width: 100,
+                progress: 0
+            },
+            methods: {
+                startEffect: function() {
+                    //setInterval
+                    var vm = this;
+                    setInterval(function(){
+                        this.changeColor = !this.changeColor;
+                    }.bind(this), 1000)
+                },
+                startProgress: function() {
+                    //setInterval
+                    var vm2 = this;
+                    var x = 0;
+                    intervalId = setInterval(function(){
+                        if(x < 500){
+                            this.progress = this.progress + 1
+                            x = x + 1;
+                        } else {
+                            clearInterval(intervalId);
+                        }
+                    }.bind(this), 25)
+                }
+            },
+            computed: {
+                styleFive: function() {
+                    return {
+                    'background-color': this.color,
+                    width: this.width + 'px',
+                    height: this.height + 'px'
+                    };
+                },
+                styleSix: function() {
+                    return {
+                    'background-color': this.green,
+                    width: this.progress + 'px',
+                    height: this.height + 'px'
+                    };
+                }
+            }
+        })
+    </script>
+  </body>
+</html>

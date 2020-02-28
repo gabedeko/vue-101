@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>title</title>
+  </head>
+  <style></style>
+  <script src="vue.js"></script>
+  <body>
+    <div id="app">
+        <!-- 1) Hook up the button to toggle the display of the two paragraphs. Use both v-if and v-show and inspect the elements to see the difference -->
+        <div>
+            <button @click="show = !show">Toggle</button>
+            <p v-if="show">You either see me ...</p>
+            <p v-else>...or me</p>
+        </div>
+        <!-- 2) Output an <ul> of array elements of your choice. Also print the index of each element. -->
+        <ul>
+            <li v-for="(p, index) in fruit">{{ p }} ({{ index }})</li>
+        </ul>
+        <!-- 3) Print all key-value pairs of the following object: {title: 'Lord of the Rings', author: 'J.R.R. Tolkiens', books: '3'}. Also print the index of each item. -->
+        <ul>
+            <li v-for="movie in movies">
+                <div v-for="(value, key, index) in movie">{{ key }}: {{ value }} - ({{ index }})</div>
+            </li>
+        </ul>
+        <!-- 4) Print the following object (only the values) and also create a nested loop for the array: {name: 'TESTOBJECT', data: [1.67, 1.33, 0.98, 2.21]} (hint: use v-for and v-if to achieve this) -->
+
+        <!-- WRONG ANSWER-->
+        <!-- <ul>
+            <li v-for="items in array">
+                <p>
+                        {{ items.name }}
+                </p>
+                <div v-for="number in items.data">
+                    {{ number }}
+                </div>
+            </li>
+        </ul> -->
+        <!-- WRONG ANSWER -->
+        <!-- RIGHT ANSWER -->
+        <ul>
+            <li v-for="value in array">
+                <template v-if="Array.isArray(value)">
+                    <div v-for="element in value">{{ element }}</div>
+                </template>
+                <template v-else>
+                    {{ value }}
+                </template>
+            </li>
+        </ul>
+        <!-- RIGHT ANSWER -->
+    </div>
+    <script>
+        new Vue ({
+            el: '#app',
+            data: {
+                show: true,
+                fruit: ['Passionfruit', 'Peach', 'Pear', 'Pomegranate', 'Pineapple', 'Plantain', 'Passionfruit', 'Pomelo', 'Pumpkin', 'Pea'],
+                movies: [
+                    {title: 'Lord of the Rings', author: 'J.R.R. Tolkiens', books: 3},
+                ],
+                array: {
+                        name: 'TESTOBJECT',
+                        id: 10,
+                        data: [
+                                1.67,
+                                1.33,
+                                0.98,
+                                2.21
+                            ]
+                        },
+            }
+        });
+    </script>
+  </body>
+
+</html>
